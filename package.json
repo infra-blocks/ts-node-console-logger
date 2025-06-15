@@ -1,16 +1,16 @@
 {
-  "name": "@infra-blocks/lib-template",
+  "name": "@infra-blocks/node-console-logger",
   "version": "0.0.0",
-  "description": "This repository is a template to generate repositories meant to hold the source code of NPM packages written in TypeScript.",
+  "description": "An implementation of the @infra-blocks/logger-interface for the Node.js console.",
   "keywords": [
-    "template",
-    "typescript",
-    "esm",
-    "cjs"
+    "logger",
+    "console",
+    "node",
+    "typescript"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/infra-blocks/ts-lib-template.git"
+    "url": "https://github.com/infra-blocks/ts-node-console-logger.git"
   },
   "license": "ISC",
   "author": "",
