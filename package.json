@@ -1,6 +1,6 @@
 {
   "name": "@infra-blocks/node-console-logger",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "An implementation of the @infra-blocks/logger-interface for the Node.js console.",
   "keywords": [
     "logger",
