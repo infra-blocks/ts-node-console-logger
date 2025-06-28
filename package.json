@@ -38,10 +38,11 @@
     "test:unit": "mocha --config test/unit/.mocharc.cjs 'test/unit/**/*.spec.ts'"
   },
   "dependencies": {
-    "@infra-blocks/logger-interface": "^0.2.0"
+    "@infra-blocks/logger-interface": "^0.2.0",
+    "@infra-blocks/types": "^0.8.0"
   },
   "devDependencies": {
-    "@infra-blocks/test": "^0.1.1",
+    "@infra-blocks/test": "^0.4.0",
     "@types/mocha": "^10.0.1",
     "@types/node": "^20.10.3",
     "@typescript-eslint/eslint-plugin": "^5.59.8",
