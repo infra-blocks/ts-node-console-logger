@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] - 2025-06-28
+
+### Fixed
+
+- Correctly forward the log level from the `create` factory function to the
+`from` factory function. The previous bug made it such that, if you created
+the logger with `create`, then the `level` option was simply ignored.
+
 ## [0.3.0] - 2025-06-28
 
 ### Added
