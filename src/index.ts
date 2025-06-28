@@ -129,8 +129,7 @@ export class ConsoleLogger implements Logger {
    *
    * @returns A new instance of {@link ConsoleLogger}.
    */
-  static create(params?: ConsoleLoggerOptions): ConsoleLogger {
-    const { name } = params || {};
-    return ConsoleLogger.from({ console, name });
+  static create(params: ConsoleLoggerOptions = {}): ConsoleLogger {
+    return ConsoleLogger.from({ console, ...params });
   }
 }
