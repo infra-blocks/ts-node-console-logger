@@ -1,6 +1,11 @@
 import { Logger, LogLevel } from "@infra-blocks/logger-interface";
 import { unreachable } from "@infra-blocks/types";
 
+export type ConsoleLoggerOptions = {
+  name?: string;
+  level?: LogLevel;
+};
+
 /**
  * An implementation of the {@link Logger} interface that uses the Node.js console for logging.
  *
@@ -13,11 +18,17 @@ import { unreachable } from "@infra-blocks/types";
 export class ConsoleLogger implements Logger {
   private readonly console: Console;
   private readonly name?: string;
+  private readonly level?: LogLevel;
 
-  private constructor(params: { console: Console; name?: string }) {
-    const { console, name } = params;
+  private constructor(params: {
+    console: Console;
+    name?: string;
+    level?: LogLevel;
+  }) {
+    const { console, name, level } = params;
     this.console = console;
     this.name = name;
+    this.level = level;
   }
 
   log(level: LogLevel, message: string, ...args: unknown[]): void {
@@ -42,34 +53,44 @@ export class ConsoleLogger implements Logger {
     }
   }
   trace(message: string, ...args: unknown[]): void {
-    this.console.trace(this.message(message), ...args);
+    if (this.isTraceEnabled()) {
+      this.console.trace(this.message(message), ...args);
+    }
   }
   debug(message: string, ...args: unknown[]): void {
-    this.console.debug(this.message(message), ...args);
+    if (this.isDebugEnabled()) {
+      this.console.debug(this.message(message), ...args);
+    }
   }
   info(message: string, ...args: unknown[]): void {
-    this.console.info(this.message(message), ...args);
+    if (this.isInfoEnabled()) {
+      this.console.info(this.message(message), ...args);
+    }
   }
   warn(message: string, ...args: unknown[]): void {
-    this.console.warn(this.message(message), ...args);
+    if (this.isWarnEnabled()) {
+      this.console.warn(this.message(message), ...args);
+    }
   }
   error(message: string, ...args: unknown[]): void {
-    this.console.error(this.message(message), ...args);
+    if (this.isErrorEnabled()) {
+      this.console.error(this.message(message), ...args);
+    }
   }
   isTraceEnabled(): boolean {
-    return true;
+    return this.level == null || this.level === "trace";
   }
   isDebugEnabled(): boolean {
-    return true;
+    return this.isTraceEnabled() || this.level === "debug";
   }
   isInfoEnabled(): boolean {
-    return true;
+    return this.isDebugEnabled() || this.level === "info";
   }
   isWarnEnabled(): boolean {
-    return true;
+    return this.isInfoEnabled() || this.level === "warn";
   }
   isErrorEnabled(): boolean {
-    return true;
+    return this.isWarnEnabled() || this.level === "error";
   }
 
   private message(message: string): string {
@@ -88,7 +109,9 @@ export class ConsoleLogger implements Logger {
    *
    * @returns A new instance of {@link ConsoleLogger}.
    */
-  static from(params: { console: Console; name?: string }): ConsoleLogger {
+  static from(
+    params: { console: Console } & ConsoleLoggerOptions
+  ): ConsoleLogger {
     return new ConsoleLogger(params);
   }
 
@@ -101,10 +124,12 @@ export class ConsoleLogger implements Logger {
    * otherwise.
    *
    * @param params.console The console object to which all log calls are dispatched.
+   * @param params.logLevel The log level for the logger. When not provided, it defaults
+   * to the {@link Console} behavior, which is to log everything.
    *
    * @returns A new instance of {@link ConsoleLogger}.
    */
-  static create(params?: { name?: string }): ConsoleLogger {
+  static create(params?: ConsoleLoggerOptions): ConsoleLogger {
     const { name } = params || {};
     return ConsoleLogger.from({ console, name });
   }
